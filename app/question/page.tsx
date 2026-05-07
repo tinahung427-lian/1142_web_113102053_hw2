@@ -3,74 +3,32 @@
 import Link from "next/link";
 import { useState, useEffect  } from "react";
 import { useRouter } from "next/navigation";
+import { usePsyStore } from "../../store/store";
 
-export default function Prepare() {
-
+export default function Question() {
   const router = useRouter();
-
-  let questionData = [
-    {
-      title: "Q1:麵包師傅要你「靜置 30 分鐘」，你會怎麼做？",
-      options:[
-        {
-          text: "選項一",
-          value: 1
-        },
-        {
-          text: "選項二",
-          value: 2
-        },
-        {
-          text: "選項三",
-          value: 3
-        },
-      ]
-    },
-    {
-      title: "Q2:當你被放進烤箱時，溫度突然升高，你的反應是？",
-      options:[
-        {
-          text: "選項一",
-          value: 1
-        },
-        {
-          text: "選項二",
-          value: 2
-        },
-        {
-          text: "選項三",
-          value: 3
-        },
-      ]
-    },
-    {
-      title: "Q3:如果你被顧客挑選時被放回去了，你會？",
-      options:[
-        {
-          text: "選項一",
-          value: 1
-        },
-        {
-          text: "選項二",
-          value: 2
-        },
-        {
-          text: "選項三",
-          value: 3
-        },
-      ]
-    },
-
-    
-   ];
-
-  
   const [questionIndex, setQuestionIndex] = useState(0);
+
+  const psyData = usePsyStore( (state) => state.psyData);
+  const setScore = usePsyStore((state) => state.setScore);
+
+  console.log(psyData);
+  console.log(psyData.quizData);
+
+
+  useEffect( () => {
+    console.log("目前分數:" + psyData.score);
+  }, [psyData.score]);
+  
 
   function nextQuestion(optionIndex: any) {
     console.log("使用者選擇：" + optionIndex);
 
-    if( questionIndex != questionData.length-1 ) {
+    setScore( psyData.score + psyData.quizData[questionIndex].options[optionIndex].value );
+    console.log( psyData.score );
+
+
+    if( questionIndex != psyData.quizData.length-1 ) {
       console.log("下一題");
       setQuestionIndex(questionIndex + 1);
     } else {
@@ -79,17 +37,18 @@ export default function Prepare() {
     }
   }
 
-
+ 
   return (
     <>
 
     <div className="flex flex-col items-center gap-4">
       答題
+
       <div>
-        <div>{ questionData[questionIndex].title }</div>
-        <div onClick={ () =>nextQuestion(0) }>{ questionData[questionIndex].options[0].text }</div>
-        <div onClick={ () =>nextQuestion(1) }>{ questionData[questionIndex].options[1].text }</div>
-        <div onClick={ () =>nextQuestion(2) }>{ questionData[questionIndex].options[2].text }</div>
+        <div>{ "Q" + (questionIndex + 1) + " " + psyData.quizData[questionIndex].title }</div>
+        <div onClick={ () =>nextQuestion(0) }>{ psyData.quizData[questionIndex].options[0].text }</div>
+        <div onClick={ () =>nextQuestion(1) }>{ psyData.quizData[questionIndex].options[1].text }</div>
+        <div onClick={ () =>nextQuestion(2) }>{ psyData.quizData[questionIndex].options[2].text }</div>
       </div>
       
       <div>
