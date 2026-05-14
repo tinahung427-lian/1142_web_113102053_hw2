@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect  } from "react";
 import { Button } from '@heroui/react';
+import Emoticons from '@/component/Emoticons';
 
 export default function Home() {
 
@@ -18,6 +19,9 @@ export default function Home() {
     <>
     <div className="flex flex-col items-center gap-4">
       歡迎！
+      {/* <Emoticons /> */}
+      <Emoticons>123</Emoticons>
+      
       <Button>
         My Button
       </Button>
