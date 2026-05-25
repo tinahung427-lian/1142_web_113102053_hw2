@@ -41,29 +41,56 @@ export default function Question() {
   return (
     <>
 
-    <div className="flex flex-col items-center gap-4">
-      答題
+<div className="w-full max-w-[420px] px-6 py-10">
 
-      <div>
-        <div>{ "Q" + (questionIndex + 1) + " " + psyData.quizData[questionIndex].title }</div>
-        {/* <div onClick={ () =>nextQuestion(0) }>{ psyData.quizData[questionIndex].options[0].text }</div>
-        <div onClick={ () =>nextQuestion(1) }>{ psyData.quizData[questionIndex].options[1].text }</div>
-        <div onClick={ () =>nextQuestion(2) }>{ psyData.quizData[questionIndex].options[2].text }</div> */}
-        {
-          psyData.quizData[questionIndex].options.map(
-            (option: any, index: number) =>{
-              return <div onClick={ () =>nextQuestion(index) }>{ option.text }</div>
-            }
-          )
-        }
-      </div>
-      
-      
-      {/* <Link className="text-white bg-black px-3 py-2"href="/prepare">準備看結果</Link> */}
-      
+{/* 題目 */}
+<div className="flex items-center gap-4 mb-10">
 
+  <div className="w-16 h-16 rounded-full bg-[#4fc06a] border-2 border-white flex items-center justify-center text-white text-2xl font-black rotate-[-8deg]">
+    Q{questionIndex + 1}
+  </div>
 
-    </div>
+  <div className="text-white text-2xl font-black leading-snug drop-shadow-[3px_3px_0px_rgba(0,0,0,0.4)]">
+    {psyData.quizData[questionIndex].title}
+  </div>
+
+</div>
+
+{/* 選項 */}
+<div className="flex flex-col gap-5">
+  {
+    psyData.quizData[questionIndex].options.map(
+      (option: any, index: number) => {
+        return (
+          <button
+            key={index}
+            onClick={() => nextQuestion(index)}
+            className="
+              w-full
+              min-h-[90px]
+              bg-[#18bd82]
+              border-2
+              border-black
+              rounded-[30px]
+              px-6
+              py-4
+              text-white
+              text-lg
+              font-bold
+              leading-relaxed
+              hover:translate-y-[-3px]
+              transition
+            "
+          >
+            {option.text}
+          </button>
+        )
+      }
+    )
+  }
+</div>
+
+</div>
     </>
   );
 }
