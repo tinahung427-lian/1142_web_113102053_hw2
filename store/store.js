@@ -10,7 +10,7 @@ const questionData = [
           value: 1
         },
         {
-          text: "半透明的琥珀色外殼，在燈光下折射出光澤",
+          text: "會折射光澤的半透明的琥珀色外殼",
           value: 2
         },
         {

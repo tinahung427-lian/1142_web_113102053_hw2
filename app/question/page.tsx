@@ -41,7 +41,7 @@ export default function Question() {
   return (
     <>
 
-<div className="w-full max-w-[420px] px-6 py-10">
+<div className="w-full max-w-[420px] px-6 py-10 mx-auto">
 
 {/* 題目 */}
 <div className="flex items-center gap-4 mb-10">
@@ -50,7 +50,7 @@ export default function Question() {
     Q{questionIndex + 1}
   </div>
 
-  <div className="text-black text-2xl font-black leading-snug drop-shadow-[3px_3px_0px_rgba(0,0,0,0.4)]">
+  <div className="text-black text-2xl font-black leading-snug">
     {psyData.quizData[questionIndex].title}
   </div>
 
