@@ -46,7 +46,7 @@ export default function Question() {
 {/* 題目 */}
 <div className="flex items-center gap-4 mb-10">
 
-  <div className="w-16 h-16 rounded-full bg-[#2f2bb0] border-2 border-white flex items-center justify-center text-white text-2xl font-black rotate-[-8deg]">
+  <div className="text-[#000000] text-3xl font-black">
     Q{questionIndex + 1}
   </div>
 
@@ -68,7 +68,7 @@ export default function Question() {
             className="
               w-full
               min-h-[90px]
-              bg-[#2f2bb0]
+              bg-[#2c272b]
               border-2
               rounded-[20px]
               px-6
