@@ -46,11 +46,11 @@ export default function Question() {
 {/* 題目 */}
 <div className="flex items-center gap-4 mb-10">
 
-  <div className="w-16 h-16 rounded-full bg-[#4fc06a] border-2 border-white flex items-center justify-center text-white text-2xl font-black rotate-[-8deg]">
+  <div className="w-16 h-16 rounded-full bg-[#2f2bb0] border-2 border-white flex items-center justify-center text-white text-2xl font-black rotate-[-8deg]">
     Q{questionIndex + 1}
   </div>
 
-  <div className="text-white text-2xl font-black leading-snug drop-shadow-[3px_3px_0px_rgba(0,0,0,0.4)]">
+  <div className="text-black text-2xl font-black leading-snug drop-shadow-[3px_3px_0px_rgba(0,0,0,0.4)]">
     {psyData.quizData[questionIndex].title}
   </div>
 
@@ -68,10 +68,9 @@ export default function Question() {
             className="
               w-full
               min-h-[90px]
-              bg-[#18bd82]
+              bg-[#2f2bb0]
               border-2
-              border-black
-              rounded-[30px]
+              rounded-[20px]
               px-6
               py-4
               text-white
