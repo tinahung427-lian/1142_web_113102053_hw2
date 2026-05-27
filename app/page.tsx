@@ -38,7 +38,7 @@ export default function Home() {
         <Link
           href="/question"
           className="
-            mt-14
+            mt-13
             bg-[#cf6c49]
             hover:bg-[#b85c3c]
             text-[#fff4df]
