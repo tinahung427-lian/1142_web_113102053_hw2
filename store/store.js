@@ -27,11 +27,11 @@ const questionData = [
       title: "按下播放鍵後，你聽到的是什麼聲音？",
       options:[
         {
-          text: "風吹過稻田、遠處有寵物與家人的喧鬧聲",
+          text: "風吹過稻田、寵物與家人的喧鬧聲",
           value: 1
         },
         {
-          text: "雨水滴落窗戶與吸管攪動玻璃杯的清脆聲",
+          text: "雨水滴落窗戶與風鈴晃動的清脆聲",
           value: 2
         },
         {
@@ -39,7 +39,7 @@ const questionData = [
           value: 3 
         },
         {
-          text: "時鐘滴答以及紙張被緩慢翻動的沙沙聲",
+          text: "時鐘滴答以及紙張翻動的沙沙聲",
           value: 4
         }
       ]
@@ -48,7 +48,7 @@ const questionData = [
       title: "如果倒帶鍵可以帶你回到過去，你會選擇回到哪個時刻？",
       options:[
         {
-          text: "回到某個與好友聊天、無憂無慮的午後",
+          text: "回到與好友聊天、無憂無慮的午後",
           value: 1
         },
         {
@@ -94,7 +94,7 @@ const questionData = [
           value: 1
         },
         {
-          text: "「如果能重來一次，我想好好說再見。」",
+          text: "「如果能重來，我想好好說再見。」",
           value: 2
         },
         {
@@ -102,7 +102,7 @@ const questionData = [
           value: 3 
         },
         {
-          text: "「總有一天，你會享受現在的孤獨。」",
+          text: "「總有一天，你會享受現在。」",
           value: 4
         }
       ]
@@ -115,11 +115,11 @@ const questionData = [
           value: 1
         },
         {
-          text: "送給某個很久沒聯絡，但偶爾還會想起的人",
+          text: "送給某個很久沒聯絡的人",
           value: 2
         },
         {
-          text: "自己留著，在某些失眠的夜晚反覆播放",
+          text: "自己留著，在失眠的夜晚反覆播放",
           value: 3 
         },
         {
