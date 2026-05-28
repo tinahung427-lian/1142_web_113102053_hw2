@@ -41,7 +41,6 @@ export default function Question() {
   function prevQuestion() {
     const newAnswers = [...answers];
 
-    // 回上一題時，把上一題的答案清掉，讓使用者重新選
     newAnswers[questionIndex - 1] = 0;
 
     setAnswers(newAnswers);
@@ -50,29 +49,56 @@ export default function Question() {
   }
 
   return (
-    <>
-      <div className="relative w-full max-w-[420px] px-6 py-10 mx-auto">
+    <div className="relative -m-4 w-[calc(100%+32px)] h-[calc(100%+32px)] overflow-hidden rounded-2xl">
+
+      {/* 播放器背景 */}
+      <img
+        src="/images/cc.png"
+        alt="retro player"
+        className="absolute bottom-0 left-0 w-full h-auto z-0"
+      />
+
+      {/* 霧化背景 */}
+      <div className="absolute inset-0 bg-[#b7d8e8]/70 backdrop-blur-[2px] z-10"></div>
+
+      {/* 耳機 */}
+      <img
+        src="/images/headphone_2.png"
+        alt="headphone"
+        className="
+          absolute
+          -right-2
+          -top-2
+          w-38
+          z-20
+          opacity-90
+          drop-shadow-md
+        "
+      />
+
+      {/* 內容 */}
+      <div className="relative z-30 w-full max-w-[420px] px-6 py-10 mx-auto">
 
         {questionIndex > 0 && (
           <button
             onClick={prevQuestion}
             className="
-            absolute
-            top-2
-            left-0
-            flex
-            items-center
-            justify-center
-            px-3
-            h-10
-            rounded-full
-            bg-white/25
-            text-[#ffffff]
-            text-base
-            font-black
-            hover:bg-white/35
-            hover:-translate-y-1
-            transition
+              absolute
+              top-5
+              left-0
+              flex
+              items-center
+              justify-center
+              px-3
+              h-10
+              rounded-full
+              bg-white/25
+              text-[#ffffff]
+              text-base
+              font-black
+              hover:bg-white/35
+              hover:-translate-y-1
+              transition
             "
           >
             ←上一題
@@ -80,11 +106,14 @@ export default function Question() {
         )}
 
         <div className="w-full max-w-[320px] mx-auto">
+
+          {/* 題號 */}
           <div className="flex flex-col items-center mb-6">
             <div className="w-12 h-12 rounded-full bg-[#c86b4a] flex items-center justify-center text-[#fff8ef] text-2xl font-bold mb-3">
               Q{questionIndex + 1}
             </div>
 
+            {/* 題目 */}
             <div className="w-fit">
               <div className="text-[#2f2a26] text-xl font-black leading-snug text-left">
                 {psyData.quizData[questionIndex].title}
@@ -92,6 +121,7 @@ export default function Question() {
             </div>
           </div>
 
+          {/* 選項 */}
           <div className="flex flex-col gap-5">
             {psyData.quizData[questionIndex].options.map(
               (option: any, index: number) => {
@@ -121,8 +151,9 @@ export default function Question() {
               }
             )}
           </div>
+
         </div>
       </div>
-    </>
+    </div>
   );
 }
