@@ -93,31 +93,39 @@ export default function Result() {
     router.push("/");
   }
 
+  async function imageToBase64(src: string) {
+    const response = await fetch(src);
+    const blob = await response.blob();
+  
+    return await new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.readAsDataURL(blob);
+    });
+  }
+  
   async function downloadResult() {
     const card = downloadCardRef.current;
     if (!card) return;
-
-    const img = card.querySelector("img") as HTMLImageElement | null;
-
-    if (img) {
+  
+    const base64Image = await imageToBase64(result.image);
+  
+    const downloadImg = card.querySelector("img") as HTMLImageElement | null;
+    if (downloadImg) {
+      downloadImg.src = base64Image;
+  
       await new Promise<void>((resolve) => {
-        if (img.complete) {
+        if (downloadImg.complete) {
           resolve();
         } else {
-          img.onload = () => resolve();
-          img.onerror = () => resolve();
+          downloadImg.onload = () => resolve();
+          downloadImg.onerror = () => resolve();
         }
       });
-
-      if (img.decode) {
-        try {
-          await img.decode();
-        } catch {}
-      }
     }
-
+  
     const htmlToImage = await import("html-to-image");
-
+  
     const image = await htmlToImage.toPng(card, {
       backgroundColor: "#eef7fa",
       width: 430,
@@ -125,7 +133,7 @@ export default function Result() {
       cacheBust: true,
       pixelRatio: 2,
     });
-
+  
     const link = document.createElement("a");
     link.href = image;
     link.download = `${result.name}.png`;
