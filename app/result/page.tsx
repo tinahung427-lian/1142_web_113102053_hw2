@@ -97,12 +97,33 @@ export default function Result() {
     const card = downloadCardRef.current;
     if (!card) return;
 
-    const domtoimage = (await import("dom-to-image-more")).default;
+    const img = card.querySelector("img") as HTMLImageElement | null;
 
-    const image = await domtoimage.toPng(card, {
-      bgcolor: "#eef7fa",
+    if (img) {
+      await new Promise<void>((resolve) => {
+        if (img.complete) {
+          resolve();
+        } else {
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
+        }
+      });
+
+      if (img.decode) {
+        try {
+          await img.decode();
+        } catch {}
+      }
+    }
+
+    const htmlToImage = await import("html-to-image");
+
+    const image = await htmlToImage.toPng(card, {
+      backgroundColor: "#eef7fa",
       width: 430,
       height: card.offsetHeight,
+      cacheBust: true,
+      pixelRatio: 2,
     });
 
     const link = document.createElement("a");
@@ -205,7 +226,16 @@ export default function Result() {
         </div>
       </div>
 
-      <div style={{ position: "fixed", left: 0, top: 0, opacity: 0, pointerEvents: "none", zIndex: -1, }}>
+      <div
+        style={{
+          position: "fixed",
+          left: 0,
+          top: 0,
+          opacity: 0.01,
+          pointerEvents: "none",
+          zIndex: -1,
+        }}
+      >
         <div
           ref={downloadCardRef}
           style={{
@@ -254,7 +284,6 @@ export default function Result() {
             <img
               src={result.image}
               alt={result.name}
-              crossOrigin="anonymous"
               style={{
                 maxWidth: "340px",
                 maxHeight: "180px",
