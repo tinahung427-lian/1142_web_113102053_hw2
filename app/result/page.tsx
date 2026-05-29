@@ -72,6 +72,7 @@ export default function Result() {
 
   function toggleAudio() {
     if (!audioRef.current) return;
+
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
@@ -86,6 +87,7 @@ export default function Result() {
     if (audioRef.current) {
       audioRef.current.pause();
     }
+
     setIsPlaying(false);
     setPsyScore(0);
     router.push("/");
@@ -94,12 +96,15 @@ export default function Result() {
   async function downloadResult() {
     const card = downloadCardRef.current;
     if (!card) return;
+
     const domtoimage = (await import("dom-to-image-more")).default;
+
     const image = await domtoimage.toPng(card, {
       bgcolor: "#eef7fa",
       width: 430,
       height: card.offsetHeight,
     });
+
     const link = document.createElement("a");
     link.href = image;
     link.download = `${result.name}.png`;
@@ -109,25 +114,41 @@ export default function Result() {
   return (
     <>
       <div className="w-full h-full overflow-hidden">
-        <div className="w-full h-full rounded-[32px] px-6 pt-5 pb-5 flex flex-col items-center">
-          <div className="text-[#fff4df] drop-shadow-[4px_2px_0px_#383838] text-[32px] font-black mb-4 shrink-0">
+        <div className="w-full h-full rounded-[32px] px-5 sm:px-6 pt-4 sm:pt-5 pb-4 sm:pb-5 flex flex-col items-center">
+          <div className="text-[#fff4df] drop-shadow-[4px_2px_0px_#383838] text-[28px] sm:text-[32px] font-black mb-3 sm:mb-4 shrink-0 text-center">
             {result.name}
           </div>
-          <div className="w-full h-[190px] flex items-center justify-center mb-4 shrink-0">
-            <img src={result.image} alt={result.name} className={`${result.imageWidth} h-auto object-contain`} />
+
+          <div className="w-full h-[150px] sm:h-[190px] flex items-center justify-center mb-3 sm:mb-4 shrink-0">
+            <img
+              src={result.image}
+              alt={result.name}
+              className={`${result.imageWidth} max-w-[90%] h-auto object-contain`}
+            />
           </div>
-          <div className="w-full rounded-[24px] bg-white/30 px-5 py-4 mb-3 text-[#2f2a26] text-[17px] leading-relaxed font-bold shrink-0">
+
+          <div className="w-full rounded-[24px] bg-white/30 px-4 sm:px-5 py-3 sm:py-4 mb-3 text-[#2f2a26] text-[15px] sm:text-[17px] leading-relaxed font-bold shrink-0">
             {result.description}
           </div>
-          <div className="w-full flex gap-3 mb-3 shrink-0">
+
+          <div className="w-full flex gap-2 sm:gap-3 mb-3 shrink-0">
             {result.hashtag.map((tag, index) => (
-              <div key={index} className="flex-1 rounded-[20px] bg-white/30 px-3 py-3 text-[#2f2a26] text-[14px] font-black text-center">
+              <div
+                key={index}
+                className="flex-1 rounded-[20px] bg-white/30 px-2 sm:px-3 py-2 sm:py-3 text-[#2f2a26] text-[12px] sm:text-[14px] font-black text-center"
+              >
                 {tag}
               </div>
             ))}
           </div>
-          <div className="w-full mb-4 shrink-0">
-            <audio ref={audioRef} src={result.audio} onEnded={() => setIsPlaying(false)} />
+
+          <div className="w-full mb-3 sm:mb-4 shrink-0">
+            <audio
+              ref={audioRef}
+              src={result.audio}
+              onEnded={() => setIsPlaying(false)}
+            />
+
             <div className="w-full grid grid-cols-[48px_1fr] items-center gap-3">
               <button
                 onClick={toggleAudio}
@@ -154,21 +175,36 @@ export default function Result() {
               >
                 {isPlaying ? "❚❚" : isHoverSong ? "▶" : "🎵"}
               </button>
-              <a href={result.youtube} target="_blank" rel="noopener noreferrer" className="w-full h-[48px] rounded-[20px] bg-white/30 px-5 text-[#2f2a26] text-[15px] font-black flex items-center justify-center text-center truncate hover:bg-white/40 transition">
+
+              <a
+                href={result.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full h-[48px] rounded-[20px] bg-white/30 px-3 sm:px-5 text-[#2f2a26] text-[13px] sm:text-[15px] font-black flex items-center justify-center text-center truncate hover:bg-white/40 transition"
+              >
                 {result.song}
               </a>
             </div>
           </div>
-          <div className="flex gap-6 shrink-0">
-            <button onClick={downloadResult} className="bg-[#c86b4a] hover:bg-[#b85c3c] text-[#fff8ef] text-[16px] font-black px-5 py-2 rounded-full transition">
+
+          <div className="flex gap-4 sm:gap-6 shrink-0">
+            <button
+              onClick={downloadResult}
+              className="bg-[#c86b4a] hover:bg-[#b85c3c] text-[#fff8ef] text-[14px] sm:text-[16px] font-black px-4 sm:px-5 py-2 rounded-full transition"
+            >
               下載結果
             </button>
-            <button onClick={playAgain} className="bg-[#c86b4a] hover:bg-[#b85c3c] text-[#fff8ef] text-[16px] font-black px-5 py-2 rounded-full transition">
+
+            <button
+              onClick={playAgain}
+              className="bg-[#c86b4a] hover:bg-[#b85c3c] text-[#fff8ef] text-[14px] sm:text-[16px] font-black px-4 sm:px-5 py-2 rounded-full transition"
+            >
               再玩一次
             </button>
           </div>
         </div>
       </div>
+
       <div style={{ position: "fixed", left: "-9999px", top: 0 }}>
         <div
           ref={downloadCardRef}
@@ -188,23 +224,114 @@ export default function Result() {
             fontFamily: "sans-serif",
           }}
         >
-          <div style={{ color: "#2f2a26", fontSize: "32px", fontWeight: 900, textAlign: "center", whiteSpace: "nowrap", border: "none", outline: "none", boxShadow: "none" }}>
+          <div
+            style={{
+              color: "#2f2a26",
+              fontSize: "32px",
+              fontWeight: 900,
+              textAlign: "center",
+              whiteSpace: "nowrap",
+              border: "none",
+              outline: "none",
+              boxShadow: "none",
+            }}
+          >
             {result.name}
           </div>
-          <div style={{ width: "100%", height: "190px", display: "flex", alignItems: "center", justifyContent: "center", border: "none", outline: "none", boxShadow: "none" }}>
-            <img src={result.image} alt={result.name} style={{ maxWidth: "340px", maxHeight: "180px", objectFit: "contain", border: "none", outline: "none", boxShadow: "none" }} />
+
+          <div
+            style={{
+              width: "100%",
+              height: "190px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "none",
+              outline: "none",
+              boxShadow: "none",
+            }}
+          >
+            <img
+              src={result.image}
+              alt={result.name}
+              style={{
+                maxWidth: "340px",
+                maxHeight: "180px",
+                objectFit: "contain",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+              }}
+            />
           </div>
-          <div style={{ width: "100%", backgroundColor: "#ffffff", borderRadius: "24px", padding: "20px 24px", color: "#2f2a26", fontSize: "18px", lineHeight: 1.7, fontWeight: 700, border: "none", outline: "none", boxShadow: "none", boxSizing: "border-box" }}>
+
+          <div
+            style={{
+              width: "100%",
+              backgroundColor: "#ffffff",
+              borderRadius: "24px",
+              padding: "20px 24px",
+              color: "#2f2a26",
+              fontSize: "18px",
+              lineHeight: 1.7,
+              fontWeight: 700,
+              border: "none",
+              outline: "none",
+              boxShadow: "none",
+              boxSizing: "border-box",
+            }}
+          >
             {result.description}
           </div>
-          <div style={{ width: "100%", display: "flex", gap: "12px", border: "none", outline: "none", boxShadow: "none" }}>
+
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: "12px",
+              border: "none",
+              outline: "none",
+              boxShadow: "none",
+            }}
+          >
             {result.hashtag.map((tag, index) => (
-              <div key={index} style={{ flex: 1, backgroundColor: "#ffffff", borderRadius: "999px", padding: "12px 8px", color: "#2f2a26", fontSize: "14px", fontWeight: 900, textAlign: "center", border: "none", outline: "none", boxShadow: "none" }}>
+              <div
+                key={index}
+                style={{
+                  flex: 1,
+                  backgroundColor: "#ffffff",
+                  borderRadius: "999px",
+                  padding: "12px 8px",
+                  color: "#2f2a26",
+                  fontSize: "14px",
+                  fontWeight: 900,
+                  textAlign: "center",
+                  border: "none",
+                  outline: "none",
+                  boxShadow: "none",
+                }}
+              >
                 {tag}
               </div>
             ))}
           </div>
-          <div style={{ width: "100%", backgroundColor: "#ffffff", borderRadius: "999px", padding: "16px 20px", color: "#2f2a26", fontSize: "16px", fontWeight: 900, textAlign: "center", border: "none", outline: "none", boxShadow: "none", boxSizing: "border-box" }}>
+
+          <div
+            style={{
+              width: "100%",
+              backgroundColor: "#ffffff",
+              borderRadius: "999px",
+              padding: "16px 20px",
+              color: "#2f2a26",
+              fontSize: "16px",
+              fontWeight: 900,
+              textAlign: "center",
+              border: "none",
+              outline: "none",
+              boxShadow: "none",
+              boxSizing: "border-box",
+            }}
+          >
             推薦歌曲：{result.song}
           </div>
         </div>
