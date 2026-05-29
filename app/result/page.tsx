@@ -10,6 +10,7 @@ export default function Result() {
   const downloadCardRef = useRef<HTMLDivElement | null>(null);
   const [isHoverSong, setIsHoverSong] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [downloadImageSrc, setDownloadImageSrc] = useState("");
   const psyData = usePsyStore((state) => state.psyData);
   const setPsyScore = usePsyStore((state) => state.setScore);
 
@@ -72,7 +73,6 @@ export default function Result() {
 
   function toggleAudio() {
     if (!audioRef.current) return;
-
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
@@ -87,7 +87,6 @@ export default function Result() {
     if (audioRef.current) {
       audioRef.current.pause();
     }
-
     setIsPlaying(false);
     setPsyScore(0);
     router.push("/");
@@ -96,36 +95,54 @@ export default function Result() {
   async function imageToBase64(src: string) {
     const response = await fetch(src);
     const blob = await response.blob();
-  
+
     return await new Promise<string>((resolve) => {
       const reader = new FileReader();
       reader.onloadend = () => resolve(reader.result as string);
       reader.readAsDataURL(blob);
     });
   }
-  
+
+  async function waitForNextFrame() {
+    return new Promise<void>((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resolve());
+      });
+    });
+  }
+
   async function downloadResult() {
     const card = downloadCardRef.current;
     if (!card) return;
-  
+
     const base64Image = await imageToBase64(result.image);
-  
-    const downloadImg = card.querySelector("img") as HTMLImageElement | null;
-    if (downloadImg) {
-      downloadImg.src = base64Image;
-  
+    setDownloadImageSrc(base64Image);
+
+    await waitForNextFrame();
+
+    const img = card.querySelector("img") as HTMLImageElement | null;
+
+    if (img) {
       await new Promise<void>((resolve) => {
-        if (downloadImg.complete) {
+        if (img.complete && img.naturalWidth > 0) {
           resolve();
         } else {
-          downloadImg.onload = () => resolve();
-          downloadImg.onerror = () => resolve();
+          img.onload = () => resolve();
+          img.onerror = () => resolve();
         }
       });
+
+      if (img.decode) {
+        try {
+          await img.decode();
+        } catch {}
+      }
     }
-  
+
+    await waitForNextFrame();
+
     const htmlToImage = await import("html-to-image");
-  
+
     const image = await htmlToImage.toPng(card, {
       backgroundColor: "#eef7fa",
       width: 430,
@@ -133,7 +150,7 @@ export default function Result() {
       cacheBust: true,
       pixelRatio: 2,
     });
-  
+
     const link = document.createElement("a");
     link.href = image;
     link.download = `${result.name}.png`;
@@ -241,7 +258,7 @@ export default function Result() {
           top: 0,
           opacity: 0.01,
           pointerEvents: "none",
-          zIndex: -1,
+          zIndex: 9999,
         }}
       >
         <div
@@ -290,7 +307,7 @@ export default function Result() {
             }}
           >
             <img
-              src={result.image}
+              src={downloadImageSrc || result.image}
               alt={result.name}
               style={{
                 maxWidth: "340px",
