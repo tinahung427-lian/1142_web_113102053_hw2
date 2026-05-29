@@ -1,18 +1,32 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "@heroui/styles";
 
 :root {
   /* Retro palette */
-  --retro-page: #f6f1e3;     /* warm cream */
-  --retro-panel: #e7d3a6;    /* aged paper */
-  --retro-ink: #2b1f1a;      /* espresso */
-  --retro-accent: #b84a3a;   /* brick red */
-  --retro-accent-2: #5a6b3f; /* olive */
-  --retro-accent-3: #2f3a66; /* indigo */
+  --retro-page: #f6f1e3;
+  --retro-panel: #e7d3a6;
+  --retro-ink: #2b1f1a;
+  --retro-accent: #b84a3a;
+  --retro-accent-2: #5a6b3f;
+  --retro-accent-3: #2f3a66;
 }
 
 body {
   margin: 0;
   background: var(--retro-page);
   color: var(--retro-ink);
+}
+
+@keyframes slowSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-slow-spin {
+  animation: slowSpin 10s linear infinite;
 }
