@@ -42,7 +42,7 @@ export default function Result() {
       description: "你討厭停下腳步，事情脫離掌控的感覺。你總給人很酷的感覺，但其實內心很敏感。也期待真正有人能理解你的情緒。",
       hashtag: ["#節奏掌控者", "#不服輸", "#懂的就懂"],
       song: "Everybody Dies in Their Nightmares",
-      audio: "/audio/hiphop.mp3",
+      audio: "/audio/hip-hop.mp3",
       youtube: "https://www.youtube.com/watch?v=7JGDWKJfgxQ&rco=1",
     },
     {
