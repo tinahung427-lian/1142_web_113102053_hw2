@@ -216,7 +216,7 @@ export default function Result() {
                   duration-300
                   hover:bg-white/40
                   hover:scale-110
-                  ${!isPlaying && !isHoverSong ? "animate-slow-spin" : ""}
+                  ${!isHoverSong ? "animate-slow-spin" : ""}
                 `}
               >
                 {isPlaying ? "❚❚" : isHoverSong ? "▶" : "🎵"}
