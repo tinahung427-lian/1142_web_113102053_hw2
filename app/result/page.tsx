@@ -205,7 +205,7 @@ export default function Result() {
         </div>
       </div>
 
-      <div style={{ position: "fixed", left: "-9999px", top: 0 }}>
+      <div style={{ position: "fixed", left: 0, top: 0, opacity: 0, pointerEvents: "none", zIndex: -1, }}>
         <div
           ref={downloadCardRef}
           style={{
@@ -254,6 +254,7 @@ export default function Result() {
             <img
               src={result.image}
               alt={result.name}
+              crossOrigin="anonymous"
               style={{
                 maxWidth: "340px",
                 maxHeight: "180px",
